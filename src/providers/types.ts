@@ -31,6 +31,7 @@ export interface SimulationResult {
   jobId: string;
   counts: Record<string, number>;
   shots: number;
+  stateVector?: [number, number][];
   metadata?: {
     qubits: number;
     depth: number;
