@@ -1,0 +1,14 @@
+[
+  {"id": "bell-state", "name": "Bell State", "category": "fundamentals", "description": "EPR pair, 양자 얽힘 기본", "qubits": 2, "difficulty": "beginner", "tags": ["entanglement","epr"]},
+  {"id": "teleportation", "name": "Quantum Teleportation", "category": "fundamentals", "description": "양자 상태 전송", "qubits": 3, "difficulty": "beginner", "tags": ["teleportation","entanglement"]},
+  {"id": "ghz", "name": "GHZ State", "category": "fundamentals", "description": "N큐빗 얽힘 상태", "qubits": 3, "difficulty": "beginner", "tags": ["entanglement","multipartite"]},
+  {"id": "superdense-coding", "name": "Superdense Coding", "category": "fundamentals", "description": "1큐빗으로 2비트 전송", "qubits": 2, "difficulty": "beginner", "tags": ["communication"]},
+  {"id": "deutsch-jozsa", "name": "Deutsch-Jozsa", "category": "search", "description": "함수가 constant인지 balanced인지 한 번에 판별", "qubits": 3, "difficulty": "intermediate", "tags": ["oracle","decision"]},
+  {"id": "bernstein-vazirani", "name": "Bernstein-Vazirani", "category": "search", "description": "숨겨진 비트열 찾기", "qubits": 4, "difficulty": "intermediate", "tags": ["oracle","hidden-string"]},
+  {"id": "simon", "name": "Simon's Algorithm", "category": "search", "description": "주기 찾기 (지수적 속도 향상)", "qubits": 4, "difficulty": "advanced", "tags": ["periodicity"]},
+  {"id": "grover", "name": "Grover's Search", "category": "search", "description": "비정렬 검색 O(√N)", "qubits": 3, "difficulty": "intermediate", "tags": ["search","amplitude-amplification"]},
+  {"id": "qft", "name": "Quantum Fourier Transform", "category": "transforms", "description": "양자 푸리에 변환", "qubits": 4, "difficulty": "intermediate", "tags": ["fourier","transform"]},
+  {"id": "shor", "name": "Shor's Algorithm", "category": "cryptography", "description": "소인수분해 (RSA 위협)", "qubits": 8, "difficulty": "advanced", "tags": ["factoring","cryptography"]},
+  {"id": "vqe", "name": "VQE", "category": "optimization", "description": "Variational Quantum Eigensolver", "qubits": 2, "difficulty": "advanced", "tags": ["variational","chemistry"]},
+  {"id": "qaoa", "name": "QAOA", "category": "optimization", "description": "Quantum Approximate Optimization", "qubits": 4, "difficulty": "advanced", "tags": ["optimization","combinatorial"]}
+]
