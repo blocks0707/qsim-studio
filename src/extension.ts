@@ -5,9 +5,43 @@ import { createQasmDiagnostics } from "./language/qasmDiagnostics";
 import { QiskitCompletionProvider } from "./language/qiskitCompletionProvider";
 import { QiskitHoverProvider } from "./language/qiskitHoverProvider";
 import { registerOpenCircuitViewer } from "./commands/openCircuitViewer";
+import { QSimProvider } from "./providers/qsimProvider";
+import { QSimStatusBar } from "./statusBar";
+import { JobsTreeProvider } from "./views/jobsTreeProvider";
+import { registerRunSimulation } from "./commands/runSimulation";
 
 export function activate(context: vscode.ExtensionContext) {
   console.log("QSim Studio is now active!");
+
+  // Output Channel
+  const outputChannel = vscode.window.createOutputChannel("QSim Studio");
+  context.subscriptions.push(outputChannel);
+
+  // Simulation Provider
+  const qsimProvider = new QSimProvider();
+
+  // Status Bar
+  const statusBar = new QSimStatusBar();
+  context.subscriptions.push({ dispose: () => statusBar.dispose() });
+
+  // Jobs TreeView
+  const jobsTree = new JobsTreeProvider(qsimProvider, outputChannel);
+  const treeView = vscode.window.createTreeView("qsim.jobs", {
+    treeDataProvider: jobsTree,
+  });
+  context.subscriptions.push(treeView);
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand("qsim.refreshJobs", () =>
+      jobsTree.refresh()
+    )
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand("qsim.showJobDetail", (record) =>
+      jobsTree.showJobDetail(record)
+    )
+  );
 
   // OpenQASM Language Support
   const qasmSelector: vscode.DocumentSelector = { language: "qasm" };
@@ -43,6 +77,9 @@ export function activate(context: vscode.ExtensionContext) {
   // Circuit Viewer
   registerOpenCircuitViewer(context);
 
+  // Run Simulation
+  registerRunSimulation(context, qsimProvider, statusBar, jobsTree, outputChannel);
+
   // Result Viewer
   context.subscriptions.push(
     vscode.commands.registerCommand("qsim.openResultViewer", () => {
@@ -55,22 +92,6 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("qsim.openAIChat", () => {
       vscode.window.showInformationMessage(
         "QSim: AI Assistant coming soon!"
-      );
-    })
-  );
-
-  // Run Simulation
-  context.subscriptions.push(
-    vscode.commands.registerCommand("qsim.runSimulation", () => {
-      const editor = vscode.window.activeTextEditor;
-      if (!editor) {
-        vscode.window.showWarningMessage("No active editor found.");
-        return;
-      }
-      const code = editor.document.getText();
-      const lang = editor.document.languageId;
-      vscode.window.showInformationMessage(
-        `QSim: Simulation submission coming soon! (${lang}, ${code.length} chars)`
       );
     })
   );
@@ -98,17 +119,6 @@ export function activate(context: vscode.ExtensionContext) {
       }
     })
   );
-
-  // Status bar
-  const statusBar = vscode.window.createStatusBarItem(
-    vscode.StatusBarAlignment.Left,
-    100
-  );
-  statusBar.text = "$(atom) QSim";
-  statusBar.tooltip = "QSim Studio";
-  statusBar.command = "qsim.runSimulation";
-  statusBar.show();
-  context.subscriptions.push(statusBar);
 }
 
 export function deactivate() {

@@ -54,6 +54,17 @@
         "command": "qsim.configureBackend",
         "title": "Configure Backend",
         "category": "QSim"
+      },
+      {
+        "command": "qsim.refreshJobs",
+        "title": "Refresh Jobs",
+        "category": "QSim",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "qsim.showJobDetail",
+        "title": "Show Job Detail",
+        "category": "QSim"
       }
     ],
     "viewsContainers": {
@@ -80,8 +91,13 @@
     "languages": [
       {
         "id": "qasm",
-        "aliases": ["OpenQASM", "QASM"],
-        "extensions": [".qasm"],
+        "aliases": [
+          "OpenQASM",
+          "QASM"
+        ],
+        "extensions": [
+          ".qasm"
+        ],
         "configuration": "./language-configuration.json"
       }
     ],
@@ -117,7 +133,10 @@
         },
         "qsim.aiProvider": {
           "type": "string",
-          "enum": ["openclaw", "none"],
+          "enum": [
+            "openclaw",
+            "none"
+          ],
           "default": "openclaw",
           "description": "AI assistant provider"
         },
@@ -140,7 +159,16 @@
         "mac": "cmd+shift+r",
         "when": "editorLangId == python || editorLangId == qasm"
       }
-    ]
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "qsim.refreshJobs",
+          "when": "view == qsim.jobs",
+          "group": "navigation"
+        }
+      ]
+    }
   },
   "scripts": {
     "compile": "node esbuild.js",
