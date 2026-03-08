@@ -10,6 +10,7 @@ import { QSimStatusBar } from "./statusBar";
 import { JobsTreeProvider } from "./views/jobsTreeProvider";
 import { registerRunSimulation } from "./commands/runSimulation";
 import { ResultViewerPanel } from "./webview/result-viewer/ResultViewerPanel";
+import { AIChatViewProvider } from "./webview/ai-chat/AIChatPanel";
 
 export function activate(context: vscode.ExtensionContext) {
   console.log("QSim Studio is now active!");
@@ -94,11 +95,30 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   // AI Chat
+  const aiChatProvider = new AIChatViewProvider(context.extensionUri);
+  context.subscriptions.push(
+    vscode.window.registerWebviewViewProvider(
+      AIChatViewProvider.viewType,
+      aiChatProvider
+    )
+  );
+
   context.subscriptions.push(
     vscode.commands.registerCommand("qsim.openAIChat", () => {
-      vscode.window.showInformationMessage(
-        "QSim: AI Assistant coming soon!"
-      );
+      vscode.commands.executeCommand("qsim.aiChat.focus");
+    })
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand("qsim.askAI", () => {
+      const editor = vscode.window.activeTextEditor;
+      if (editor) {
+        const selection = editor.document.getText(editor.selection);
+        const prompt = selection
+          ? `이 코드에 대해 설명해줘:\n\`\`\`${editor.document.languageId}\n${selection}\n\`\`\``
+          : "";
+        aiChatProvider.askAboutSelection(prompt);
+      }
     })
   );
 

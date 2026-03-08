@@ -65,6 +65,11 @@
         "command": "qsim.showJobDetail",
         "title": "Show Job Detail",
         "category": "QSim"
+      },
+      {
+        "command": "qsim.askAI",
+        "title": "Ask QSim AI about this",
+        "category": "QSim"
       }
     ],
     "viewsContainers": {
@@ -85,6 +90,11 @@
         {
           "id": "qsim.jobs",
           "name": "Jobs"
+        },
+        {
+          "type": "webview",
+          "id": "qsim.aiChat",
+          "name": "AI Assistant"
         }
       ]
     },
@@ -166,6 +176,13 @@
           "command": "qsim.refreshJobs",
           "when": "view == qsim.jobs",
           "group": "navigation"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "qsim.askAI",
+          "when": "editorHasSelection",
+          "group": "qsim@1"
         }
       ]
     }
