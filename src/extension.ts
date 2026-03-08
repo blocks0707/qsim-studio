@@ -2,6 +2,8 @@ import * as vscode from "vscode";
 import { QasmCompletionProvider } from "./language/qasmCompletionProvider";
 import { QasmHoverProvider } from "./language/qasmHoverProvider";
 import { createQasmDiagnostics } from "./language/qasmDiagnostics";
+import { QiskitCompletionProvider } from "./language/qiskitCompletionProvider";
+import { QiskitHoverProvider } from "./language/qiskitHoverProvider";
 
 export function activate(context: vscode.ExtensionContext) {
   console.log("QSim Studio is now active!");
@@ -21,6 +23,21 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   createQasmDiagnostics(context);
+
+  // Qiskit Python Language Support
+  const pythonSelector: vscode.DocumentSelector = { language: "python" };
+
+  context.subscriptions.push(
+    vscode.languages.registerCompletionItemProvider(
+      pythonSelector,
+      new QiskitCompletionProvider(),
+      "."
+    )
+  );
+
+  context.subscriptions.push(
+    vscode.languages.registerHoverProvider(pythonSelector, new QiskitHoverProvider())
+  );
 
   // Circuit Viewer
   context.subscriptions.push(
