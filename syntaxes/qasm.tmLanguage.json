@@ -1,0 +1,67 @@
+{
+  "name": "OpenQASM",
+  "scopeName": "source.qasm",
+  "fileTypes": ["qasm"],
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#strings" },
+    { "include": "#keywords" },
+    { "include": "#gates" },
+    { "include": "#types" },
+    { "include": "#numbers" },
+    { "include": "#operators" }
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        { "name": "comment.line.double-slash.qasm", "match": "//.*$" },
+        { "name": "comment.block.qasm", "begin": "/\\*", "end": "\\*/" }
+      ]
+    },
+    "strings": {
+      "patterns": [
+        { "name": "string.quoted.double.qasm", "begin": "\"", "end": "\"" }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.control.qasm",
+          "match": "\\b(if|else|for|while|in|return|break|continue|end|def|gate|opaque|include|barrier|measure|reset)\\b"
+        },
+        {
+          "name": "keyword.other.qasm",
+          "match": "\\b(OPENQASM|qreg|creg|qubit|bit|int|uint|float|bool|const|let|input|output)\\b"
+        }
+      ]
+    },
+    "gates": {
+      "patterns": [
+        {
+          "name": "support.function.gate.qasm",
+          "match": "\\b(x|y|z|h|s|t|sdg|tdg|cx|cz|cy|ccx|cswap|swap|rx|ry|rz|u1|u2|u3|U|CX|id|sx|rxx|ryy|rzz|p|cp|crx|cry|crz)\\b"
+        }
+      ]
+    },
+    "types": {
+      "patterns": [
+        {
+          "name": "storage.type.qasm",
+          "match": "\\b(qubit|bit|int|uint|float|bool|angle|duration|stretch)\\b"
+        }
+      ]
+    },
+    "numbers": {
+      "patterns": [
+        { "name": "constant.numeric.qasm", "match": "\\b[0-9]+(\\.[0-9]+)?([eE][+-]?[0-9]+)?\\b" },
+        { "name": "constant.numeric.hex.qasm", "match": "\\b0x[0-9a-fA-F]+\\b" },
+        { "name": "constant.language.qasm", "match": "\\b(pi|tau|euler)\\b" }
+      ]
+    },
+    "operators": {
+      "patterns": [
+        { "name": "keyword.operator.qasm", "match": "(->|==|!=|<=|>=|<<|>>|\\+|-|\\*|/|%|&|\\||\\^|~|!)" }
+      ]
+    }
+  }
+}

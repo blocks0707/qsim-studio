@@ -1,0 +1,157 @@
+{
+  "name": "qsim-studio",
+  "displayName": "QSim Studio",
+  "description": "Quantum Computing Studio - IDE for quantum circuit development with qsim-cluster backend",
+  "version": "0.1.0",
+  "publisher": "blocks0707",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/blocks0707/qsim-studio"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Visualization",
+    "Machine Learning"
+  ],
+  "activationEvents": [
+    "onLanguage:qasm",
+    "onLanguage:python"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "qsim.openCircuitViewer",
+        "title": "Open Circuit Viewer",
+        "category": "QSim"
+      },
+      {
+        "command": "qsim.openResultViewer",
+        "title": "Open Result Viewer",
+        "category": "QSim"
+      },
+      {
+        "command": "qsim.openAIChat",
+        "title": "Open AI Assistant",
+        "category": "QSim"
+      },
+      {
+        "command": "qsim.runSimulation",
+        "title": "Run Simulation",
+        "category": "QSim",
+        "icon": "$(play)"
+      },
+      {
+        "command": "qsim.openAlgorithmRegistry",
+        "title": "Browse Algorithms",
+        "category": "QSim"
+      },
+      {
+        "command": "qsim.configureBackend",
+        "title": "Configure Backend",
+        "category": "QSim"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "qsim-studio",
+          "title": "QSim Studio",
+          "icon": "$(atom)"
+        }
+      ]
+    },
+    "views": {
+      "qsim-studio": [
+        {
+          "id": "qsim.algorithms",
+          "name": "Algorithms"
+        },
+        {
+          "id": "qsim.jobs",
+          "name": "Jobs"
+        }
+      ]
+    },
+    "languages": [
+      {
+        "id": "qasm",
+        "aliases": ["OpenQASM", "QASM"],
+        "extensions": [".qasm"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "qasm",
+        "scopeName": "source.qasm",
+        "path": "./syntaxes/qasm.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "python",
+        "path": "./snippets/qiskit.json"
+      },
+      {
+        "language": "qasm",
+        "path": "./snippets/qasm.json"
+      }
+    ],
+    "configuration": {
+      "title": "QSim Studio",
+      "properties": {
+        "qsim.apiUrl": {
+          "type": "string",
+          "default": "http://localhost:8080",
+          "description": "qsim-cluster API server URL"
+        },
+        "qsim.apiToken": {
+          "type": "string",
+          "default": "",
+          "description": "Bearer token for qsim-cluster API"
+        },
+        "qsim.aiProvider": {
+          "type": "string",
+          "enum": ["openclaw", "none"],
+          "default": "openclaw",
+          "description": "AI assistant provider"
+        },
+        "qsim.openclawUrl": {
+          "type": "string",
+          "default": "http://localhost:18789",
+          "description": "OpenClaw gateway URL"
+        },
+        "qsim.autoVisualize": {
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically open circuit viewer on .qasm/.py files"
+        }
+      }
+    },
+    "keybindings": [
+      {
+        "command": "qsim.runSimulation",
+        "key": "ctrl+shift+r",
+        "mac": "cmd+shift+r",
+        "when": "editorLangId == python || editorLangId == qasm"
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "node esbuild.js",
+    "watch": "node esbuild.js --watch",
+    "package": "vsce package",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/vscode": "^1.85.0",
+    "esbuild": "^0.19.0",
+    "typescript": "^5.3.0"
+  }
+}

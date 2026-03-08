@@ -1,0 +1,47 @@
+{
+  "QASM Header": {
+    "prefix": "qasm3",
+    "body": [
+      "OPENQASM 3.0;",
+      "include \"stdgates.inc\";",
+      "",
+      "qubit[${1:2}] q;",
+      "bit[${1:2}] c;",
+      "",
+      "${0}"
+    ],
+    "description": "OpenQASM 3.0 header"
+  },
+  "QASM 2 Header": {
+    "prefix": "qasm2",
+    "body": [
+      "OPENQASM 2.0;",
+      "include \"qelib1.inc\";",
+      "",
+      "qreg q[${1:2}];",
+      "creg c[${1:2}];",
+      "",
+      "${0}"
+    ],
+    "description": "OpenQASM 2.0 header"
+  },
+  "Bell State QASM": {
+    "prefix": "bell",
+    "body": [
+      "// Bell State",
+      "h q[0];",
+      "cx q[0], q[1];",
+      "measure q -> c;"
+    ],
+    "description": "Bell state in QASM"
+  },
+  "Custom Gate": {
+    "prefix": "gate",
+    "body": [
+      "gate ${1:mygate}(${2:theta}) ${3:q} {",
+      "    ${0}",
+      "}"
+    ],
+    "description": "Define a custom gate"
+  }
+}

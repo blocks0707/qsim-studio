@@ -1,0 +1,94 @@
+{
+  "Qiskit Import": {
+    "prefix": "qimport",
+    "body": [
+      "from qiskit import QuantumCircuit, QuantumRegister, ClassicalRegister",
+      "from qiskit_aer import AerSimulator",
+      ""
+    ],
+    "description": "Import Qiskit essentials"
+  },
+  "Quantum Circuit": {
+    "prefix": "qcircuit",
+    "body": [
+      "qc = QuantumCircuit(${1:2}, ${2:2})",
+      "${0}"
+    ],
+    "description": "Create a quantum circuit"
+  },
+  "Bell State": {
+    "prefix": "qbell",
+    "body": [
+      "# Bell State (|00⟩ + |11⟩) / √2",
+      "qc = QuantumCircuit(2, 2)",
+      "qc.h(0)",
+      "qc.cx(0, 1)",
+      "qc.measure([0, 1], [0, 1])",
+      ""
+    ],
+    "description": "Create a Bell state circuit"
+  },
+  "GHZ State": {
+    "prefix": "qghz",
+    "body": [
+      "# GHZ State (|000⟩ + |111⟩) / √2",
+      "n = ${1:3}",
+      "qc = QuantumCircuit(n, n)",
+      "qc.h(0)",
+      "for i in range(1, n):",
+      "    qc.cx(0, i)",
+      "qc.measure_all()",
+      ""
+    ],
+    "description": "Create a GHZ state circuit"
+  },
+  "Run Simulation": {
+    "prefix": "qrun",
+    "body": [
+      "simulator = AerSimulator()",
+      "result = simulator.run(qc, shots=${1:1024}).result()",
+      "counts = result.get_counts()",
+      "print(counts)",
+      ""
+    ],
+    "description": "Run circuit on Aer simulator"
+  },
+  "Hadamard All": {
+    "prefix": "qhall",
+    "body": [
+      "for i in range(${1:n}):",
+      "    qc.h(i)",
+      ""
+    ],
+    "description": "Apply Hadamard to all qubits"
+  },
+  "Measure All": {
+    "prefix": "qmeasure",
+    "body": [
+      "qc.measure_all()",
+      ""
+    ],
+    "description": "Measure all qubits"
+  },
+  "QFT": {
+    "prefix": "qqft",
+    "body": [
+      "# Quantum Fourier Transform",
+      "import numpy as np",
+      "",
+      "def qft(qc, n):",
+      "    for i in range(n):",
+      "        qc.h(i)",
+      "        for j in range(i + 1, n):",
+      "            qc.cp(np.pi / 2**(j - i), j, i)",
+      "    # Swap qubits",
+      "    for i in range(n // 2):",
+      "        qc.swap(i, n - i - 1)",
+      "",
+      "qc = QuantumCircuit(${1:4})",
+      "qft(qc, ${1:4})",
+      ""
+    ],
+    "description": "Quantum Fourier Transform circuit"
+  }
+}
