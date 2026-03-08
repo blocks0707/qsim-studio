@@ -1,7 +1,26 @@
 import * as vscode from "vscode";
+import { QasmCompletionProvider } from "./language/qasmCompletionProvider";
+import { QasmHoverProvider } from "./language/qasmHoverProvider";
+import { createQasmDiagnostics } from "./language/qasmDiagnostics";
 
 export function activate(context: vscode.ExtensionContext) {
   console.log("QSim Studio is now active!");
+
+  // OpenQASM Language Support
+  const qasmSelector: vscode.DocumentSelector = { language: "qasm" };
+
+  context.subscriptions.push(
+    vscode.languages.registerCompletionItemProvider(
+      qasmSelector,
+      new QasmCompletionProvider()
+    )
+  );
+
+  context.subscriptions.push(
+    vscode.languages.registerHoverProvider(qasmSelector, new QasmHoverProvider())
+  );
+
+  createQasmDiagnostics(context);
 
   // Circuit Viewer
   context.subscriptions.push(
