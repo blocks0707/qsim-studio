@@ -9,6 +9,7 @@ import { QSimProvider } from "./providers/qsimProvider";
 import { QSimStatusBar } from "./statusBar";
 import { JobsTreeProvider } from "./views/jobsTreeProvider";
 import { registerRunSimulation } from "./commands/runSimulation";
+import { ResultViewerPanel } from "./webview/result-viewer/ResultViewerPanel";
 
 export function activate(context: vscode.ExtensionContext) {
   console.log("QSim Studio is now active!");
@@ -80,10 +81,15 @@ export function activate(context: vscode.ExtensionContext) {
   // Run Simulation
   registerRunSimulation(context, qsimProvider, statusBar, jobsTree, outputChannel);
 
-  // Result Viewer
+  // Result Viewer (manual open with sample data for testing)
   context.subscriptions.push(
     vscode.commands.registerCommand("qsim.openResultViewer", () => {
-      vscode.window.showInformationMessage("QSim: Result Viewer coming soon!");
+      ResultViewerPanel.createOrShow(context.extensionUri, {
+        jobId: "sample-000",
+        counts: { "00": 500, "01": 120, "10": 130, "11": 250 },
+        shots: 1000,
+        metadata: { qubits: 2, depth: 4, gateCount: 6, executionTimeMs: 42 },
+      });
     })
   );
 

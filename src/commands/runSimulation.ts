@@ -3,6 +3,7 @@ import { QSimProvider } from "../providers/qsimProvider";
 import { QSimStatusBar } from "../statusBar";
 import { JobsTreeProvider } from "../views/jobsTreeProvider";
 import { SimulationOptions } from "../providers/types";
+import { ResultViewerPanel } from "../webview/result-viewer/ResultViewerPanel";
 
 const POLL_INTERVAL_MS = 2000;
 
@@ -127,6 +128,10 @@ export function registerRunSimulation(
                 }
                 outputChannel.show(true);
                 statusBar.completed();
+
+                // Open Result Viewer
+                ResultViewerPanel.createOrShow(context.extensionUri, result);
+
                 vscode.window.showInformationMessage(
                   `Simulation completed! (${result.shots} shots)`
                 );
