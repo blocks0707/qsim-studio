@@ -3,7 +3,12 @@
 src/**
 node_modules/**
 docs/**
+.github/**
 .gitignore
 tsconfig.json
 esbuild.js
+jest.config.js
 **/*.map
+**/*.test.ts
+**/__mocks__/**
+AGENTS.md
