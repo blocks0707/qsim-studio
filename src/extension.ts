@@ -4,6 +4,7 @@ import { QasmHoverProvider } from "./language/qasmHoverProvider";
 import { createQasmDiagnostics } from "./language/qasmDiagnostics";
 import { QiskitCompletionProvider } from "./language/qiskitCompletionProvider";
 import { QiskitHoverProvider } from "./language/qiskitHoverProvider";
+import { registerOpenCircuitViewer } from "./commands/openCircuitViewer";
 
 export function activate(context: vscode.ExtensionContext) {
   console.log("QSim Studio is now active!");
@@ -40,11 +41,7 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   // Circuit Viewer
-  context.subscriptions.push(
-    vscode.commands.registerCommand("qsim.openCircuitViewer", () => {
-      vscode.window.showInformationMessage("QSim: Circuit Viewer coming soon!");
-    })
-  );
+  registerOpenCircuitViewer(context);
 
   // Result Viewer
   context.subscriptions.push(
