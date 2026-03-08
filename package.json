@@ -70,6 +70,17 @@
         "command": "qsim.askAI",
         "title": "Ask QSim AI about this",
         "category": "QSim"
+      },
+      {
+        "command": "qsim.openAlgorithmFile",
+        "title": "Open Algorithm",
+        "category": "QSim"
+      },
+      {
+        "command": "qsim.insertAlgorithm",
+        "title": "Insert to Editor",
+        "category": "QSim",
+        "icon": "$(insert)"
       }
     ],
     "viewsContainers": {
@@ -176,6 +187,23 @@
           "command": "qsim.refreshJobs",
           "when": "view == qsim.jobs",
           "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "qsim.insertAlgorithm",
+          "when": "view == qsim.algorithms && viewItem == algorithm",
+          "group": "inline"
+        },
+        {
+          "command": "qsim.insertAlgorithm",
+          "when": "view == qsim.algorithms && viewItem == algorithm",
+          "group": "qsim@1"
+        },
+        {
+          "command": "qsim.openAlgorithmFile",
+          "when": "view == qsim.algorithms && viewItem == algorithm",
+          "group": "qsim@2"
         }
       ],
       "editor/context": [

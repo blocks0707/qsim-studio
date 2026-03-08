@@ -11,6 +11,9 @@ import { JobsTreeProvider } from "./views/jobsTreeProvider";
 import { registerRunSimulation } from "./commands/runSimulation";
 import { ResultViewerPanel } from "./webview/result-viewer/ResultViewerPanel";
 import { AIChatViewProvider } from "./webview/ai-chat/AIChatPanel";
+import { AlgorithmRegistryProvider } from "./registry/registryProvider";
+import { registerAlgorithmCommands } from "./commands/openAlgorithmRegistry";
+import algorithms from "./registry/algorithms.json";
 
 export function activate(context: vscode.ExtensionContext) {
   console.log("QSim Studio is now active!");
@@ -122,14 +125,13 @@ export function activate(context: vscode.ExtensionContext) {
     })
   );
 
-  // Algorithm Registry
-  context.subscriptions.push(
-    vscode.commands.registerCommand("qsim.openAlgorithmRegistry", () => {
-      vscode.window.showInformationMessage(
-        "QSim: Algorithm Registry coming soon!"
-      );
-    })
-  );
+  // Algorithm Registry TreeView
+  const registryProvider = new AlgorithmRegistryProvider(context.extensionUri);
+  const algorithmTree = vscode.window.createTreeView("qsim.algorithms", {
+    treeDataProvider: registryProvider,
+  });
+  context.subscriptions.push(algorithmTree);
+  registerAlgorithmCommands(context, algorithms as any);
 
   // Configure Backend
   context.subscriptions.push(
